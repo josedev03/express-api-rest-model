@@ -1,0 +1,33 @@
+{
+  "name": "moc-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "debugg": "ndb server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "6.8.0",
+    "nodemon": "2.0.2",
+    "standard": "14.3.3"
+  },
+  "dependencies": {
+    "@hapi/joi": "17.1.1",
+    "colors": "^1.4.0",
+    "express": "4.17.1",
+    "mongoose": "^5.9.6"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "rules": {
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ]
+    }
+  }
+}
