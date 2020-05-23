@@ -28,6 +28,7 @@ async function getById(id) {
 
 async function add(payload) {
   try {
+    payload.status = 1;
     const todo = new TodoModel(payload)
     const result = await todo.save()
     return result
@@ -58,7 +59,7 @@ async function update(payload) {
 
 async function remove(payload) {
   try {
-    const foundTodo = await TodoModel.findByIdAndDelete({
+    const foundTodo = await TodoModel.findOne({
       _id: payload.id
     })
 
@@ -66,7 +67,9 @@ async function remove(payload) {
       return { errors: `Query Error cannot find id: ${payload.id}` }
     }
 
-    return foundTodo
+    foundTodo.status = 3
+    const result = await foundTodo.save()
+    return result 
   } catch (error) {
     console.log(colors.red.underline(`[Query] ${error.message}`))
     return { errors: 'Query Error' }
