@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const colors = require('colors')
+const cors = require('cors')
 
 const db = require('./db')
 
@@ -12,6 +13,7 @@ db.connect(app)
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cors())
 
 // envio de la aplicacion como parametro
 router(app)

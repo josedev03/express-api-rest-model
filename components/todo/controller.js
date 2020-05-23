@@ -13,7 +13,8 @@ async function getTodo() {
     resultQuery.map((element) => {
       const temp = {
         id: element._id,
-        description: element.description
+        description: element.description,
+        status: element.status
       }
       listTodo.push(temp)
     })
@@ -38,7 +39,8 @@ async function getTodoById(id) {
     return {
       data: {
         id: resultQuery._id,
-        description: resultQuery.description
+        description: resultQuery.description,
+        status: resultQuery.status
       }
     }
   } catch (error) {
@@ -95,10 +97,30 @@ async function deleteTodo(payload) {
   }
 }
 
+async function doneTodo(payload) {
+  try {
+    const resultUpdate = await db.done(payload)
+    if (resultUpdate.errors) {
+      return { errors: resultUpdate.errors }
+    }
+
+    return {
+      data: {
+        id: resultUpdate._id,
+        message: 'todo done'
+      }
+    }
+  } catch (error) {
+    console.log(colors.red(`[ERROR] ${error}`))
+    return { errors: error.message }
+  }
+}
+
 module.exports = {
   getTodo,
   getTodoById,
   createTodo,
   updateTodo,
-  deleteTodo
+  deleteTodo,
+  doneTodo
 }

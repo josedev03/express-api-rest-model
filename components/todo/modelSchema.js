@@ -21,9 +21,14 @@ const deleteTodoSchema = Joi.object({
   id: Joi.string().required()
 })
 
+const doneTodoSchema = Joi.object({
+  id: Joi.string().required()
+})
+
 module.exports = {
   getTodoByIdSchema,
   createTodoSchema,
   updateTodoSchema,
-  deleteTodoSchema
+  deleteTodoSchema,
+  doneTodoSchema
 }

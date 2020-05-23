@@ -73,10 +73,30 @@ async function remove(payload) {
   }
 }
 
+async function done(payload) {
+  try {
+    const foundTodo = await TodoModel.findOne({
+      _id: payload.id
+    })
+
+    if (!foundTodo || foundTodo === undefined) {
+      return { errors: `Query Error cannot find id: ${payload.id}` }
+    }
+
+    foundTodo.status = 2
+    const result = await foundTodo.save()
+    return result
+  } catch (error) {
+    console.log(colors.red.underline(`[Query] ${error.message}`))
+    return { errors: 'Query Error' }
+  }
+}
+
 module.exports = {
   get,
   getById,
   add,
   update,
-  remove
+  remove,
+  done
 }

@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const todoController = require('./controller')
-const { getTodoByIdSchema, createTodoSchema, updateTodoSchema, deleteTodoSchema } = require('./modelSchema')
+const { getTodoByIdSchema, createTodoSchema, updateTodoSchema, deleteTodoSchema, doneTodoSchema } = require('./modelSchema')
 const colors = require('colors')
 
-// TODO.. mejorar las respuestas de cada metodo
 router.get('/', async(req, res) => {
   const result = await todoController.getTodo()
   res.json({ ...result })
@@ -53,6 +52,18 @@ router.delete('/', async(req, res) => {
     res.status(422).json({ errors: 'invalid request' })
   } else {
     const response = await todoController.deleteTodo(req.body)
+    res.json({ ...response })
+  }
+})
+
+router.put('/done', async(req, res) => {
+  const result = doneTodoSchema.validate(req.body)
+
+  if (result.error) {
+    console.log(colors.cyan(`[ERROR] ${result.error.message}`))
+    res.status(422).json({ errors: 'invalid request' })
+  } else {
+    const response = await todoController.doneTodo(req.body)
     res.json({ ...response })
   }
 })
